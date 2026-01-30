@@ -19,7 +19,7 @@
     --bs-secondary-color-rgb: 24, 24, 37;
     --bs-secondary-bg: #181825;
     --bs-secondary-bg-rgb: 24, 24, 37;
-    --bs-tertiary-color: rgba(222, 226, 230, 0.5);
+    --bs-tertiary-color: #1f1f2b;
     --bs-tertiary-color-rgb: 222, 226, 230;
     --bs-tertiary-bg: #1e1e2e;
     --bs-tertiary-bg-rgb: 30, 30, 46;
@@ -70,22 +70,16 @@
 input, select {
     border-style: solid;
 }
-input::-webkit-input-placeholder, input::-moz-placeholder, input:-moz-placeholder, input::placeholder {
-    color: #6c7086;
-    opacity: 1;
-}
 
-select {
-    background-color: var(--bs-secondary-bg) !important;
-    border: 2px var(--bs-tertiary-bg) solid !important;
-}
-
-#Grid div.col {
+.Icon {
     background-color: var(--bs-secondary-bg);
     padding: 1rem;
     margin: 1rem;
     border: 2px var(--bs-tertiary-bg) solid;
     border-radius: 0.5rem;
+}
+.Icon:hover {
+    background-color: var(--bs-tertiary-color);
 }
 
 .border-primary {

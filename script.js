@@ -41,6 +41,10 @@ const EditModes = { Push: new PushStrat(), Edit: new EditStrat() }
 let EditStrategy = EditModes.Push
 let DataBlocks = []
 
+function RenderBlocks() {
+    
+}
+
 function PushNewBlock(Data) {
     DataBlocks.push(Data)
     console.log(DataBlocks)

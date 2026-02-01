@@ -77,10 +77,13 @@ class EditStrat extends BaseEditStrat{
     }
 }
 
-const GridColumns = 2
-const BreakpointColumns = 1
-const Breakpoint = 800
-let CurGridCount = GridColumns
+const GridBreaks = {
+    0: 1,
+    900: 2,
+    1300: 3
+}
+
+let CurGridCount = 1
 const Form = document.getElementById("Form")
 const ButtonGroup = document.getElementById("ButtonGroup")
 const CancelButton = document.getElementById("Cancel")
@@ -175,10 +178,13 @@ CancelButton.addEventListener('click', () => {
 
 function HandleResize() {
     const newWindowWidth = window.innerWidth;
-    if (newWindowWidth <= Breakpoint)
-        CurGridCount = BreakpointColumns
-    else
-        CurGridCount = GridColumns
+    let ChosenSize = null
+    for (let [key, value] of Object.entries(GridBreaks)) {
+        if (key <= newWindowWidth){
+            ChosenSize = value
+        }        
+    }
+    CurGridCount = ChosenSize
     RenderBlocks()
 }
 window.addEventListener('resize', HandleResize)

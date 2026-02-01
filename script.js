@@ -45,24 +45,26 @@ class EditStrat extends BaseEditStrat{
         var Data = new FormData(Form)
         var formObject = Object.fromEntries(Data.entries())
         for (const prop in this.Target) {
+            // Apaga os valores antigos do alvo, previnindo apagar valores importantes
             if (Object.hasOwnProperty.call(this.Target, prop)) {
                 delete this.Target[prop]
             }
         }
 
+        // JS usa valores complexos por ponteiro, ou seja, podemos usar edição in-place, o que esse loop faz
         for (let [key, value] of Object.entries(formObject)) {
             this.Target[key] = value
         }
         RenderBlocks()
         this.Target = null
+        // Trocar de volta para o modo normal
         EditStrategy = EditModes.Push
         EditStrategy.OnChosen()
     }
     SetTarget(Target){
-        console.log(Target)
         super.SetTarget(Target)
         for (let [key, value] of Object.entries(Target)) {
-            console.log(`${key}: ${value}`)
+            // Coloca os dados do alvo dentro do formulário
             if (!Form.elements[key])
                 continue
             Form.elements[key].value = value
@@ -74,6 +76,7 @@ class EditStrat extends BaseEditStrat{
     }
 }
 
+// Os breakpoints usados pelo site
 const GridBreaks = {
     0: 1,
     900: 2,
@@ -122,6 +125,7 @@ function RenderBlocks() {
     Grid.replaceChildren()
     for (let i = 0; i < DataBlocks.length; i++){
         let Data = DataBlocks[i]
+        // Cria uma nova linha se o indice for 0 baseado no tamanho maximo de linhas
         if (i % CurGridCount == 0){
             Container = document.createElement("div")
             Container.classList.add("row")
@@ -133,6 +137,7 @@ function RenderBlocks() {
         Icon.classList.add("Icon")
         Icon.style.position = "relative"
         
+        // Montar a parte de dentro baseado nas informações
         for (let [key, value] of Object.entries(Data)) {
             if (!value)
                 continue
@@ -168,7 +173,8 @@ function ExportCSV(){
     let Values = []
     let Datas = []
 
-     for (let [_, data] of Object.entries(DataBlocks)) {
+    // Inicializar valores basicos usados para modularidade
+    for (let [_, data] of Object.entries(DataBlocks)) {
         Datas.push(data)
         for (let [key, _] of Object.entries(data)) {
             if (Values.includes(key))
@@ -176,10 +182,11 @@ function ExportCSV(){
             Values.push(key)
         }
     }
+
+    // Montar as linhas do CSV
     let Lines = []
     Lines.push(Values.join(","))
     for (let dat of Datas){
-        console.log(dat)
         var Formatted = []
         for (let key of Values){
             Formatted.push(key in dat ? dat[key] : "")
@@ -188,9 +195,11 @@ function ExportCSV(){
     }
     let Separated = Lines.join("\n")
 
+    // Criar um novo Blob para exportar o CSV
     const blob = new Blob([Separated], { type: 'text/csvcharset=utf-8' })
     const url = URL.createObjectURL(blob)
 
+    // Cria um elemento <a> temporario para servir como download
     const link = document.createElement('a')
     link.href = url
     link.download = "Exported"
@@ -199,18 +208,21 @@ function ExportCSV(){
     link.click()
     document.body.removeChild(link)
 
+    // Remove URL para economizar memoria e previnir memory leak (não é muito importante num site pequeno assim mas é bom)
     URL.revokeObjectURL(url)
 }
 
 function ImportCSV(Data){
     const Lines = Data.split(/\r?\n/)
-    var Values = Lines[0].split(",")
+    var Values = Lines[0].split(",") // Inicializa indices basicos
     let Builts = []
 
     for (let i = 1; i < Lines.length; i++){
         let Line = Lines[i]
         let Val = Line.split(",")
         let Build = {}
+
+        // Colocar cada valor no indice correto
         for (let s of Values){
             let ind = Values.indexOf(s)
             Build[s] = Val[ind]
@@ -268,7 +280,8 @@ FileSelector.addEventListener('change', (Ev) => {
         return
     const File = files[0]
     const reader = new FileReader()
-    console.log(File)
+
+    // Importar assim que o leitor acabar de ler
     reader.onload = function(e) {
         const contents = e.target.result
         ImportCSV(contents)

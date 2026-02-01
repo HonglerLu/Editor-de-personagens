@@ -224,6 +224,9 @@ function ImportCSV(Data){
 
         // Colocar cada valor no indice correto
         for (let s of Values){
+            // Valida se o formulário tem o valor necessario
+            if (!(s in Form.elements))
+                continue
             let ind = Values.indexOf(s)
             Build[s] = Val[ind]
         }

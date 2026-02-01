@@ -61,6 +61,7 @@
     --bs-form-valid-border-color: #75b798;
     --bs-form-invalid-color: #ea868f;
     --bs-form-invalid-border-color: #ea868f;
+    --border-primary: #1e1e2e;
   }
 
 * {
@@ -100,8 +101,12 @@ input, select {
     opacity: 1;
 }
 
-.border-primary {
-    border-color: #1e1e2e !important;
+.Input {
+    border-radius: var(--bs-border-radius) !important;
+    border-width: 2px !important;
+    border-color: var(--border-primary) !important;
+    background-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
+    border-radius: var(--bs-border-radius) !important;
 }
 
 label {

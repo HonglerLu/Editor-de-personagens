@@ -1,2 +1,2 @@
-# Bingosbingas
-Cria uma lista de personagens e possibilita a mudança de dados como vida, velocidade, resistência, nome, playstyle, entre outros
+# Atividade: Editor de informações de personagem
+Nesse site, você pode criar uma lista de personagens e colocar infomações sobre eles(a), e exportar/importar por CSV

@@ -280,6 +280,9 @@ function ImportCSV(Data){
     for (let Build of Formatted){
         let Data = {}
         for (let Key = 0; Key < Header.length; Key++){
+            if (!(Header[Key] in Form.elements))
+                continue
+            
             Data[Header[Key]] = Build[Key] // Insere os valores na chave baseada no Header/Cabeçalho
         }
         Completes.push(Data)
